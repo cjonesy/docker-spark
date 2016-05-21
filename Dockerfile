@@ -20,4 +20,4 @@ RUN curl -sL --retry 3 "http://d3kbcqa49mib13.cloudfront.net/$SPARK_PACKAGE.tgz"
     rm -rf $SPARK_HOME/examples $SPARK_HOME/ec2 && \
     rm $SPARK_HOME/lib/spark-examples-*-hadoop*.jar
 
-CMD ["/bin/bash"]
+CMD ["tail -f /dev/null"]
