@@ -5,7 +5,7 @@ MAINTAINER "Charlie Jones" cjones73@gmail.com
 CMD ["/sbin/my_init"]
 
 # Versions
-ENV SPARK_VERSION 1.6.1
+ENV SPARK_VERSION 1.5.2
 ENV SPARK_HADOOP_VERSION 2.6
 
 # Installing dependencies
