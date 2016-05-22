@@ -10,7 +10,7 @@ ENV SPARK_HADOOP_VERSION 2.6
 
 # Installing dependencies
 RUN apt-get update && \
-    apt-get install -y curl unzip python2.7 python-pip && \
+    apt-get install -y curl unzip python2.7 python-pip libpq-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
