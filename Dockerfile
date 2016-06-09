@@ -1,5 +1,5 @@
 FROM java:8-jre-alpine
-MAINTAINER Charlie Jones <cjones73@gmail.com>
+MAINTAINER cjonesy
 
 
 #-------------------------------------------------------------------------------
@@ -30,10 +30,9 @@ RUN apk add --no-cache bash python py-pip curl unzip gcc postgresql-dev \
     rm -rf $SPARK_HOME/examples $SPARK_HOME/ec2 && \
     rm $SPARK_HOME/lib/spark-examples-*-hadoop*.jar
 
-#    mv /usr/$SPARK_PACKAGE $SPARK_HOME &&
 
 #-------------------------------------------------------------------------------
 # Entry
 #-------------------------------------------------------------------------------
 ENTRYPOINT ["sh", "-c"]
-CMD ["/usr/spark/bin/pyspark"]
+CMD ["tail", "-f", "/dev/null"]
