@@ -1,32 +1,49 @@
-FROM java:8-jre-alpine
+FROM centos:7
 MAINTAINER cjonesy
 
 
 #-------------------------------------------------------------------------------
-# Spark configs
+# Install dependencies
 #-------------------------------------------------------------------------------
-ENV SPARK_VERSION=1.6.1 \
-    SPARK_HADOOP_VERSION=2.6
-ENV SPARK_PACKAGE=spark-$SPARK_VERSION-bin-hadoop$SPARK_HADOOP_VERSION
+RUN yum install -y \
+        java-1.8.0-openjdk java-1.8.0-openjdk-devel \
+        python-setuptools python-devel \
+        postgresql-devel gcc && \
+    yum clean all
+
+# Install pip
+RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "/tmp/get-pip.py" && \
+    python /tmp/get-pip.py
 
 
 #-------------------------------------------------------------------------------
-# Set Environment Variables
+# Install Hadoop
 #-------------------------------------------------------------------------------
-ENV SPARK_HOME=/usr/spark
-ENV PATH=$PATH:$SPARK_HOME/bin \
-    PYTHONPATH=$SPARK_HOME/python/lib/py4j-0.9-src.zip:$SPARK_HOME/python/
+ENV HADOOP_VERSION=2.6.4
+ENV HADOOP_HOME=/usr/hadoop
+ENV HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+ENV PATH=$PATH:$HADOOP_HOME/bin
 
-
-#-------------------------------------------------------------------------------
-# Install Spark and dependencies
-#-------------------------------------------------------------------------------
-RUN apk add --no-cache bash python py-pip curl unzip gcc postgresql-dev \
-                       python-dev musl-dev libffi-dev && \
-    curl -sL --retry 3 \
-    "http://d3kbcqa49mib13.cloudfront.net/$SPARK_PACKAGE.tgz" | \
+RUN curl -L --retry 3 \
+    "http://www.gtlib.gatech.edu/pub/apache/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz" | \
     gunzip | tar x -C /usr/ && \
-    ln -s /usr/$SPARK_PACKAGE $SPARK_HOME && \
+    ln -s /usr/hadoop-$HADOOP_VERSION $HADOOP_HOME && \
+    rm -rf $HADOOP_HOME/share/doc
+
+
+#-------------------------------------------------------------------------------
+# Install Spark
+#-------------------------------------------------------------------------------
+ENV SPARK_VERSION=1.6.1
+ENV SPARK_HOME=/usr/spark
+ENV SPARK_DIST_CLASSPATH="$HADOOP_HOME/etc/hadoop/*:$HADOOP_HOME/share/hadoop/common/lib/*:$HADOOP_HOME/share/hadoop/common/*:$HADOOP_HOME/share/hadoop/hdfs/*:$HADOOP_HOME/share/hadoop/hdfs/lib/*:$HADOOP_HOME/share/hadoop/hdfs/*:$HADOOP_HOME/share/hadoop/yarn/lib/*:$HADOOP_HOME/share/hadoop/yarn/*:$HADOOP_HOME/share/hadoop/mapreduce/lib/*:$HADOOP_HOME/share/hadoop/mapreduce/*:$HADOOP_HOME/share/hadoop/tools/lib/*"
+ENV PATH=$PATH:$SPARK_HOME/bin
+ENV PYTHONPATH=$SPARK_HOME/python/lib/py4j-0.9-src.zip:$SPARK_HOME/python/
+
+RUN curl -L --retry 3 \
+    "http://d3kbcqa49mib13.cloudfront.net/spark-$SPARK_VERSION-bin-without-hadoop.tgz" | \
+    gunzip | tar x -C /usr/ && \
+    ln -s /usr/spark-$SPARK_VERSION-bin-without-hadoop $SPARK_HOME && \
     rm -rf $SPARK_HOME/examples $SPARK_HOME/ec2 && \
     rm $SPARK_HOME/lib/spark-examples-*-hadoop*.jar
 
@@ -35,4 +52,3 @@ RUN apk add --no-cache bash python py-pip curl unzip gcc postgresql-dev \
 # Entry
 #-------------------------------------------------------------------------------
 ENTRYPOINT ["sh", "-c"]
-CMD ["tail", "-f", "/dev/null"]
