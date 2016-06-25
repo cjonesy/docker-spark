@@ -6,15 +6,12 @@ MAINTAINER cjonesy
 # Install dependencies
 #-------------------------------------------------------------------------------
 RUN yum install -y \
-        java-1.8.0-openjdk java-1.8.0-openjdk-devel \
-        python-setuptools python-devel \
-        postgresql-devel gcc && \
-    yum clean all
-
-# Install pip
-RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "/tmp/get-pip.py" && \
-    python /tmp/get-pip.py
-
+        java-1.8.0-openjdk java-1.8.0-openjdk-devel python-setuptools \
+        python-devel postgresql-devel gcc libffi-devel openssl-devel libxml2 \
+        libxml2-devel libxslt libxslt-devel && \
+    yum clean all && \
+    easy_install pip
+    
 
 #-------------------------------------------------------------------------------
 # Install Hadoop
