@@ -5,10 +5,11 @@ MAINTAINER cjonesy
 #-------------------------------------------------------------------------------
 # Install dependencies
 #-------------------------------------------------------------------------------
-RUN yum install -y \
+RUN yum install -y epel-release \
+    yum install -y \
         java-1.8.0-openjdk java-1.8.0-openjdk-devel python-setuptools \
         python-devel postgresql-devel gcc libffi-devel openssl-devel libxml2 \
-        libxml2-devel libxslt libxslt-devel && \
+        libxml2-devel libxslt libxslt-devel htop && \
     yum clean all && \
     easy_install pip
     
