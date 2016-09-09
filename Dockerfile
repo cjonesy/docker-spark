@@ -4,9 +4,13 @@ MAINTAINER cjonesy
 #-------------------------------------------------------------------------------
 # Install dependencies
 #-------------------------------------------------------------------------------
-RUN yum install -y python-setuptools python-devel gcc wget && \
+RUN yum install -y \
+        python-setuptools python-devel gcc wget libiffi-devel openssl-devel \
+        postgresql-devel libxml2 libxml2-devel libxslt libxslt-devel && \
     yum clean all && \
-    easy_install pip
+    easy_install pip && \
+    rm /etc/localtime && \
+    ln -s /usr/share/zoneinfo/America/Chicago /etc/localtime
 
 
 #-------------------------------------------------------------------------------
@@ -61,3 +65,4 @@ RUN curl -L --retry 3 \
 # Entry
 #-------------------------------------------------------------------------------
 ENTRYPOINT ["sh", "-c"]
+
