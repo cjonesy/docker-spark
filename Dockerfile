@@ -60,6 +60,8 @@ RUN curl -L --retry 3 \
     rm -rf $SPARK_HOME/examples $SPARK_HOME/ec2 && \
     rm $SPARK_HOME/lib/spark-examples-*-hadoop*.jar
 
+COPY spark-defaults.conf $SPARK_HOME/conf/spark-defaults.conf
+
 
 #-------------------------------------------------------------------------------
 # Entry
