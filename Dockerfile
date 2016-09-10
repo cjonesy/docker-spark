@@ -37,7 +37,7 @@ ENV HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 ENV PATH=$PATH:$HADOOP_HOME/bin
 
 RUN curl -L --retry 3 \
-    "http://www.gtlib.gatech.edu/pub/apache/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz" | \
+    "http://apache.mirrors.lucidnetworks.net/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz" | \
     gunzip | tar x -C /usr/ && \
     ln -s /usr/hadoop-$HADOOP_VERSION $HADOOP_HOME && \
     rm -rf $HADOOP_HOME/share/doc
