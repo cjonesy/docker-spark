@@ -46,7 +46,7 @@ RUN curl -L --retry 3 \
 #-------------------------------------------------------------------------------
 # Install Spark
 #-------------------------------------------------------------------------------
-ENV SPARK_VERSION=1.6.1
+ENV SPARK_VERSION=2.0.0
 ENV SPARK_HOME=/usr/spark
 ENV SPARK_DIST_CLASSPATH="$HADOOP_HOME/etc/hadoop/*:$HADOOP_HOME/share/hadoop/common/lib/*:$HADOOP_HOME/share/hadoop/common/*:$HADOOP_HOME/share/hadoop/hdfs/*:$HADOOP_HOME/share/hadoop/hdfs/lib/*:$HADOOP_HOME/share/hadoop/hdfs/*:$HADOOP_HOME/share/hadoop/yarn/lib/*:$HADOOP_HOME/share/hadoop/yarn/*:$HADOOP_HOME/share/hadoop/mapreduce/lib/*:$HADOOP_HOME/share/hadoop/mapreduce/*:$HADOOP_HOME/share/hadoop/tools/lib/*"
 ENV PATH=$PATH:$SPARK_HOME/bin
@@ -57,8 +57,7 @@ RUN curl -L --retry 3 \
     "http://d3kbcqa49mib13.cloudfront.net/spark-$SPARK_VERSION-bin-without-hadoop.tgz" | \
     gunzip | tar x -C /usr/ && \
     ln -s /usr/spark-$SPARK_VERSION-bin-without-hadoop $SPARK_HOME && \
-    rm -rf $SPARK_HOME/examples $SPARK_HOME/ec2 && \
-    rm $SPARK_HOME/lib/spark-examples-*-hadoop*.jar
+    rm -rf $SPARK_HOME/examples
 
 COPY spark-defaults.conf $SPARK_HOME/conf/spark-defaults.conf
 
