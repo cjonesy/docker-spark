@@ -16,13 +16,13 @@ RUN yum install -y \
 #-------------------------------------------------------------------------------
 # Install Java
 #-------------------------------------------------------------------------------
-ENV JAVA_VERSION=8u101
-ENV JAVA_BUILD=13
+ENV JAVA_VERSION=8u131
+ENV JAVA_BUILD=11
 ENV JAVA_HOME=/usr/java/default
 
 RUN wget --no-cookies --no-check-certificate \
          --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
-         "http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION}-b${JAVA_BUILD}/jdk-${JAVA_VERSION}-linux-x64.rpm" \
+         "http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION}-b${JAVA_BUILD}/d54c1d3a095b4ff2b6607d096fa80163/jdk-${JAVA_VERSION}-linux-x64.rpm" \
          -O /tmp/jdk-${JAVA_VERSION}-linux-x64.rpm && \
          yum localinstall -y /tmp/jdk-${JAVA_VERSION}-linux-x64.rpm && \
          rm /tmp/jdk-${JAVA_VERSION}-linux-x64.rpm
