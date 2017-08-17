@@ -16,15 +16,15 @@ RUN yum install -y \
 #-------------------------------------------------------------------------------
 # Install Java
 #-------------------------------------------------------------------------------
-ENV JAVA_URL="http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.tar.gz"
+ENV JAVA_URL="http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.rpm"
 ENV JAVA_HOME=/usr/java/default
 
 RUN wget --no-cookies --no-check-certificate \
          --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
          "$JAVA_URL" \
-         -O /tmp/java-jdk-linux-x64.rpm && \
-         yum localinstall -y /tmp/java-jdk-linux-x64.rpm && \
-         rm /tmp/java-jdk-linux-x64.rpm
+         -O /tmp/jdk-linux-x64.rpm && \
+         yum localinstall -y /tmp/jdk-linux-x64.rpm && \
+         rm /tmp/jdk-linux-x64.rpm
 
 
 #-------------------------------------------------------------------------------
