@@ -9,6 +9,7 @@ RUN yum install -y \
         postgresql-devel libxml2 libxml2-devel libxslt libxslt-devel && \
     yum clean all && \
     easy_install pip && \
+    pip install --upgrade setuptools pip && \
     rm /etc/localtime && \
     ln -s /usr/share/zoneinfo/America/Chicago /etc/localtime
 
@@ -58,11 +59,14 @@ RUN curl -L --retry 3 \
     ln -s /usr/spark-$SPARK_VERSION-bin-without-hadoop $SPARK_HOME && \
     rm -rf $SPARK_HOME/examples
 
-COPY spark-defaults.conf $SPARK_HOME/conf/spark-defaults.conf
-
 
 #-------------------------------------------------------------------------------
 # Entry
 #-------------------------------------------------------------------------------
-ENTRYPOINT ["sh", "-c"]
+COPY ./entrypoint.sh /
+
+ENTRYPOINT ["/entrypoint.sh"]
+
+CMD ["sh"]
+
 
