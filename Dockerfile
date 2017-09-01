@@ -6,7 +6,7 @@ MAINTAINER cjonesy
 #-------------------------------------------------------------------------------
 RUN yum install -y \
         python-setuptools python-devel gcc wget libiffi-devel openssl-devel \
-        postgresql-devel libxml2 libxml2-devel libxslt libxslt-devel && \
+        postgresql-devel libxml2 libxml2-devel libxslt libxslt-devel which && \
     yum clean all && \
     easy_install pip && \
     rm /etc/localtime && \
