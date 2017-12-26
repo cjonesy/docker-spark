@@ -9,6 +9,7 @@ RUN yum install -y \
         postgresql-devel libxml2 libxml2-devel libxslt libxslt-devel && \
     yum clean all && \
     easy_install pip && \
+    pip install --upgrade setuptools pip && \
     rm /etc/localtime && \
     ln -s /usr/share/zoneinfo/America/Chicago /etc/localtime
 
@@ -16,16 +17,15 @@ RUN yum install -y \
 #-------------------------------------------------------------------------------
 # Install Java
 #-------------------------------------------------------------------------------
-ENV JAVA_VERSION=8u131
-ENV JAVA_BUILD=11
+ENV JAVA_URL="http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.rpm"
 ENV JAVA_HOME=/usr/java/default
 
 RUN wget --no-cookies --no-check-certificate \
          --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
-         "http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION}-b${JAVA_BUILD}/d54c1d3a095b4ff2b6607d096fa80163/jdk-${JAVA_VERSION}-linux-x64.rpm" \
-         -O /tmp/jdk-${JAVA_VERSION}-linux-x64.rpm && \
-         yum localinstall -y /tmp/jdk-${JAVA_VERSION}-linux-x64.rpm && \
-         rm /tmp/jdk-${JAVA_VERSION}-linux-x64.rpm
+         "$JAVA_URL" \
+         -O /tmp/jdk-linux-x64.rpm && \
+         yum localinstall -y /tmp/jdk-linux-x64.rpm && \
+         rm /tmp/jdk-linux-x64.rpm
 
 
 #-------------------------------------------------------------------------------
@@ -46,7 +46,7 @@ RUN curl -L --retry 3 \
 #-------------------------------------------------------------------------------
 # Install Spark
 #-------------------------------------------------------------------------------
-ENV SPARK_VERSION=2.1.1
+ENV SPARK_VERSION=2.2.0
 ENV SPARK_HOME=/usr/spark
 ENV SPARK_DIST_CLASSPATH="$HADOOP_HOME/etc/hadoop/*:$HADOOP_HOME/share/hadoop/common/lib/*:$HADOOP_HOME/share/hadoop/common/*:$HADOOP_HOME/share/hadoop/hdfs/*:$HADOOP_HOME/share/hadoop/hdfs/lib/*:$HADOOP_HOME/share/hadoop/hdfs/*:$HADOOP_HOME/share/hadoop/yarn/lib/*:$HADOOP_HOME/share/hadoop/yarn/*:$HADOOP_HOME/share/hadoop/mapreduce/lib/*:$HADOOP_HOME/share/hadoop/mapreduce/*:$HADOOP_HOME/share/hadoop/tools/lib/*"
 ENV PATH=$PATH:$SPARK_HOME/bin
@@ -59,11 +59,12 @@ RUN curl -L --retry 3 \
     ln -s /usr/spark-$SPARK_VERSION-bin-without-hadoop $SPARK_HOME && \
     rm -rf $SPARK_HOME/examples
 
-COPY spark-defaults.conf $SPARK_HOME/conf/spark-defaults.conf
-
 
 #-------------------------------------------------------------------------------
 # Entry
 #-------------------------------------------------------------------------------
-ENTRYPOINT ["sh", "-c"]
+COPY ./entrypoint.sh /
 
+ENTRYPOINT ["/entrypoint.sh"]
+
+CMD ["sh"]
