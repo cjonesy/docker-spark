@@ -6,7 +6,7 @@ MAINTAINER cjonesy
 #-------------------------------------------------------------------------------
 RUN yum install -y \
         python-setuptools python-devel gcc wget libiffi-devel openssl-devel \
-        postgresql-devel libxml2 libxml2-devel libxslt libxslt-devel zip && \
+        postgresql-devel libxml2 libxml2-devel libxslt libxslt-devel which zip && \
     yum clean all && \
     easy_install pip && \
     pip install --upgrade setuptools pip && \
@@ -54,7 +54,7 @@ ENV PYTHONPATH=$SPARK_HOME/python/:$SPARK_HOME/python/lib/py4j-0.10.4-src.zip:$S
 ENV PYSPARK_PYTHON=/usr/bin/python
 
 RUN curl -L --retry 3 \
-    "https://www.apache.org/dyn/closer.lua/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-without-hadoop.tgz" | \
+    "http://d3kbcqa49mib13.cloudfront.net/spark-$SPARK_VERSION-bin-without-hadoop.tgz" | \
     gunzip | tar x -C /usr/ && \
     ln -s /usr/spark-$SPARK_VERSION-bin-without-hadoop $SPARK_HOME && \
     rm -rf $SPARK_HOME/examples
