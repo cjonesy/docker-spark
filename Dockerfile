@@ -17,7 +17,7 @@ RUN yum install -y \
 #-------------------------------------------------------------------------------
 # Install Java
 #-------------------------------------------------------------------------------
-ENV JAVA_URL="http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.rpm"
+ENV JAVA_URL="http://download.oracle.com/otn-pub/java/jdk/8u152-b16/aa0333dd3019491ca4f6ddbe78cdb6d0/jdk-8u152-linux-x64.rpm"
 ENV JAVA_HOME=/usr/java/default
 
 RUN wget --no-cookies --no-check-certificate \
@@ -46,7 +46,7 @@ RUN curl -L --retry 3 \
 #-------------------------------------------------------------------------------
 # Install Spark
 #-------------------------------------------------------------------------------
-ENV SPARK_VERSION=2.2.0
+ENV SPARK_VERSION=2.2.1
 ENV SPARK_HOME=/usr/spark
 ENV SPARK_DIST_CLASSPATH="$HADOOP_HOME/etc/hadoop/*:$HADOOP_HOME/share/hadoop/common/lib/*:$HADOOP_HOME/share/hadoop/common/*:$HADOOP_HOME/share/hadoop/hdfs/*:$HADOOP_HOME/share/hadoop/hdfs/lib/*:$HADOOP_HOME/share/hadoop/hdfs/*:$HADOOP_HOME/share/hadoop/yarn/lib/*:$HADOOP_HOME/share/hadoop/yarn/*:$HADOOP_HOME/share/hadoop/mapreduce/lib/*:$HADOOP_HOME/share/hadoop/mapreduce/*:$HADOOP_HOME/share/hadoop/tools/lib/*"
 ENV PATH=$PATH:$SPARK_HOME/bin
