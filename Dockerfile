@@ -6,7 +6,7 @@ MAINTAINER cjonesy
 #-------------------------------------------------------------------------------
 RUN yum install -y \
         python-setuptools python-devel gcc wget libiffi-devel openssl-devel \
-        postgresql-devel libxml2 libxml2-devel libxslt libxslt-devel zip && \
+        postgresql-devel libxml2 libxml2-devel libxslt libxslt-devel which zip && \
     yum clean all && \
     easy_install pip && \
     pip install --upgrade setuptools pip && \
@@ -17,7 +17,7 @@ RUN yum install -y \
 #-------------------------------------------------------------------------------
 # Install Java
 #-------------------------------------------------------------------------------
-ENV JAVA_URL="http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.rpm"
+ENV JAVA_URL="http://download.oracle.com/otn-pub/java/jdk/8u151-b12/e758a0de34e24606bca991d704f6dcbf/jdk-8u151-linux-x64.rpm"
 ENV JAVA_HOME=/usr/java/default
 
 RUN wget --no-cookies --no-check-certificate \
