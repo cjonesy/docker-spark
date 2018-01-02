@@ -31,7 +31,7 @@ RUN wget --no-cookies --no-check-certificate \
 #-------------------------------------------------------------------------------
 # Install Hadoop
 #-------------------------------------------------------------------------------
-ENV HADOOP_VERSION=2.6.4
+ENV HADOOP_VERSION=2.6.5
 ENV HADOOP_HOME=/usr/hadoop
 ENV HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 ENV PATH=$PATH:$HADOOP_HOME/bin
