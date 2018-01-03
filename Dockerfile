@@ -54,7 +54,7 @@ ENV PYTHONPATH=$SPARK_HOME/python/:$SPARK_HOME/python/lib/py4j-0.10.4-src.zip:$S
 ENV PYSPARK_PYTHON=/usr/bin/python
 
 RUN curl -L --retry 3 \
-    "http://d3kbcqa49mib13.cloudfront.net/spark-$SPARK_VERSION-bin-without-hadoop.tgz" | \
+    "https://archive.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-without-hadoop.tgz" | \
     gunzip | tar x -C /usr/ && \
     ln -s /usr/spark-$SPARK_VERSION-bin-without-hadoop $SPARK_HOME && \
     rm -rf $SPARK_HOME/examples
