@@ -59,6 +59,29 @@ RUN curl -L --retry 3 \
     ln -s /usr/spark-$SPARK_VERSION-bin-without-hadoop $SPARK_HOME && \
     rm -rf $SPARK_HOME/examples
 
+RUN useradd -ms /bin/bash -d ${SPARK_HOME} spark
+RUN chown -R spark $SPARK_HOME
+RUN chmod -R g+rw $SPARK_HOME
+
+
+#-------------------------------------------------------------------------------
+# Install Airflow
+#-------------------------------------------------------------------------------
+
+RUN pip install celery==4.1.0 greenlet==0.4.12 eventlet==0.21.0 filechunkio==1.8 greenlet==0.4.12
+
+ARG AIRFLOW_HOME=/usr/local/airflow
+RUN useradd -ms /bin/bash -d ${AIRFLOW_HOME} airflow
+RUN usermod -a -G spark
+EXPOSE 8080 5555 8793
+
+RUN pip install apache-airflow[hdfs]==1.8.1
+
+COPY config/airflow.cfg ${AIRFLOW_HOME}/airflow.cfg
+RUN chown -R airflow: ${AIRFLOW_HOME}
+USER airflow
+WORKDIR ${AIRFLOW_HOME}
+
 
 #-------------------------------------------------------------------------------
 # Entry
