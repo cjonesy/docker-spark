@@ -72,7 +72,7 @@ RUN pip install celery==4.1.0 greenlet==0.4.12 eventlet==0.21.0 filechunkio==1.8
 
 ARG AIRFLOW_HOME=/usr/local/airflow
 RUN useradd -ms /bin/bash -d ${AIRFLOW_HOME} airflow
-RUN usermod -a spark
+RUN usermod -G -a spark
 EXPOSE 8080 5555 8793
 
 RUN pip install apache-airflow[hdfs]==1.8.1
