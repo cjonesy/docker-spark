@@ -59,4 +59,4 @@ if [[ -n $SPARK_EVENTLOG_DIR ]]; then
 fi
 
 echo "Executing: $@"
-exec $@
+exec "$@"

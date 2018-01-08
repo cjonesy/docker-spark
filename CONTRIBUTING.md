@@ -1,7 +1,12 @@
 # Contributing
 
-When contributing to this repository, please first discuss the change you wish to make via issue,
-email, or any other method with the owners of this repository before making a change. 
+Fork, then clone the repo:
+```
+git clone git@github.com:your-username/docker-spark.git
+```
+
+Make your changes, push to your fork and [submit a pull request](https://github.com/cjonesy/docker-spark/compare/).
+
 
 ## Pull Request Process
 
