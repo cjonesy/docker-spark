@@ -59,6 +59,7 @@ RUN curl -L --retry 3 \
     ln -s /usr/spark-$SPARK_VERSION-bin-without-hadoop $SPARK_HOME && \
     rm -rf $SPARK_HOME/examples
 
+COPY spark-defaults.conf $SPARK_HOME/conf/spark-defaults.conf
 
 #-------------------------------------------------------------------------------
 # Entry
