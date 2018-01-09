@@ -3,6 +3,7 @@
 [![Docker Build Status](https://img.shields.io/docker/build/cjonesy/docker-spark.svg)]()
 [![Docker Pulls](https://img.shields.io/docker/pulls/cjonesy/docker-spark.svg)]()
 [![Docker Stars](https://img.shields.io/docker/stars/cjonesy/docker-spark.svg)]()
+[![Build Status](https://travis-ci.org/cjonesy/docker-spark.svg)](https://travis-ci.org/cjonesy/docker-spark/branches)
 
 This repository contains **Dockerfile** of [Apache Spark](https://github.com/apache/spark) for [Docker](https://www.docker.com/)'s [automated build](https://hub.docker.com/r/cjonesy/docker-spark/) published to the public [Docker Hub Registry](https://registry.hub.docker.com/).
 
@@ -60,7 +61,7 @@ It is possible to override the following values in `spark-defaults.conf` from en
 
 Example:
 ```
-docker run -e SPARK_UI_ENABLED=false -it cjones/docker-spark spark-shell
+docker run -e SPARK_UI_ENABLED=false -it cjonesy/docker-spark spark-shell
 ```
 
 ## How to contribute
