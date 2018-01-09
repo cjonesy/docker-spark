@@ -1,0 +1,19 @@
+sudo: required
+
+language: python
+
+services:
+  - docker
+
+env:
+  global:
+    - REPO=cjonesy/docker-spark
+
+script:
+  - docker build -t $REPO -f Dockerfile .
+  - docker run cjonesy/docker-spark spark-shell --version
+  - docker run cjonesy/docker-spark pyspark --version
+  - docker run cjonesy/docker-spark bash --version
+
+after_script:
+  - docker images
