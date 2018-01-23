@@ -6,14 +6,45 @@ services:
   - docker
 
 env:
-  global:
-    - REPO=cjonesy/docker-spark
+  matrix:
+    - VERSION=1.6.3 VARIANT=
+    - VERSION=1.6.3 VARIANT=centos-7
+    - VERSION=1.6.3 VARIANT=debian-8-slim
+    - VERSION=2.0.0 VARIANT=
+    - VERSION=2.0.0 VARIANT=centos-7
+    - VERSION=2.0.0 VARIANT=debian-8-slim
+    - VERSION=2.0.1 VARIANT=
+    - VERSION=2.0.1 VARIANT=centos-7
+    - VERSION=2.0.1 VARIANT=debian-8-slim
+    - VERSION=2.0.2 VARIANT=
+    - VERSION=2.0.2 VARIANT=centos-7
+    - VERSION=2.0.2 VARIANT=debian-8-slim
+    - VERSION=2.1.0 VARIANT=
+    - VERSION=2.1.0 VARIANT=centos-7
+    - VERSION=2.1.0 VARIANT=debian-8-slim
+    - VERSION=2.1.1 VARIANT=
+    - VERSION=2.1.1 VARIANT=centos-7
+    - VERSION=2.1.1 VARIANT=debian-8-slim
+    - VERSION=2.1.2 VARIANT=
+    - VERSION=2.1.2 VARIANT=centos-7
+    - VERSION=2.1.2 VARIANT=debian-8-slim
+    - VERSION=2.2.0 VARIANT=
+    - VERSION=2.2.0 VARIANT=centos-7
+    - VERSION=2.2.0 VARIANT=debian-8-slim
+    - VERSION=2.2.1 VARIANT=
+    - VERSION=2.2.1 VARIANT=centos-7
+    - VERSION=2.2.1 VARIANT=debian-8-slim
+    - VERSION=2.2.1 VARIANT=latest
+
+before_script:
+  - env | script
+  - cd "$VERSION"
+  - image="cjonesy/docker-spark:${VERSION}${VARIANT:+-$VARIANT}"
+  - dockerfile="${VARIANT:+$VARIANT.}Dockerfile"
+  - if [ "${VARIANT}" == "latest" ]; then dockerfile="Dockerfile"; image="cjonesy/docker-spark:latest"; fi
 
 script:
-  - docker build -t $REPO -f Dockerfile .
-  - docker run cjonesy/docker-spark spark-shell --version
-  - docker run cjonesy/docker-spark pyspark --version
-  - docker run cjonesy/docker-spark bash --version
+  - travis_retry docker build -f "$dockerfile" -t "$image" .
 
 after_script:
   - docker images
