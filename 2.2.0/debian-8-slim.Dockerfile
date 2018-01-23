@@ -1,4 +1,4 @@
-FROM centos:7
+FROM debian:jessie-slim
 MAINTAINER cjonesy
 
 ENV SPARK_HOME=/usr/spark
@@ -7,21 +7,28 @@ ENV PYTHONPATH=$SPARK_HOME/python/:$SPARK_HOME/python/lib/py4j-0.10.4-src.zip:$S
 ENV PYSPARK_PYTHON=/usr/bin/python
 
 # Install Dependencies
-RUN yum install -y \
-        python \
-        zip \
-        java-1.8.0-openjdk \
- && yum clean all \
+RUN echo 'deb http://deb.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/jessie-backports.list \
+ && apt-get update -y \
+ && mkdir /usr/share/man/man1 \
+ && apt-get install -t jessie-backports -y \
+            ca-certificates-java \
+            openjdk-8-jre-headless \
+            git \
+            curl \
+            python \
+            zip \
+            --no-install-recommends \
  && curl -o /tmp/get-pip.py https://bootstrap.pypa.io/get-pip.py \
  && python /tmp/get-pip.py --disable-pip-version-check --no-cache-dir \
- && rm -rf /var/cache/yum \
- && rm -rf /tmp/*
+ && rm -rf /var/lib/apt/lists/* \
+ && rm -rf /tmp/* \
+ && apt-get clean
 
 # Install Spark
-ENV SPARK_VERSION=2.2.1
+ENV SPARK_VERSION=2.2.0
 ENV HADOOP_VERSION=2.6
 
-RUN curl -L --retry 3 \
+RUN curl --retry 3 \ 
     "https://archive.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop$HADOOP_VERSION.tgz" | \
     gunzip | tar x -C /usr/ \
  && ln -s /usr/spark-$SPARK_VERSION-bin-hadoop$HADOOP_VERSION $SPARK_HOME \

@@ -18,7 +18,7 @@ RUN yum install -y \
  && rm -rf /tmp/*
 
 # Install Spark
-ENV SPARK_VERSION=2.2.1
+ENV SPARK_VERSION=2.0.0
 ENV HADOOP_VERSION=2.6
 
 RUN curl -L --retry 3 \
