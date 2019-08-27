@@ -24,7 +24,6 @@ RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm && \
         libxml2-devel \
         libxslt \
         libxslt-devel \
-        which \
         zip && \
     yum clean all && \
     rm /etc/localtime && \
