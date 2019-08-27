@@ -21,6 +21,8 @@ RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm && \
         libxslt-devel \
         zip && \
     yum clean all && \
+    /usr/bin/pip2 install --upgrade setuptools pip && \
+    /usr/bin/pip3.6 install --upgrade setuptools pip && \
     rm /etc/localtime && \
     ln -s /usr/share/zoneinfo/America/Chicago /etc/localtime
 
@@ -33,7 +35,7 @@ RUN yum -y install java-${JAVA_VERSION}-openjdk
 #-------------------------------------------------------------------------------
 # Install Spark
 #-------------------------------------------------------------------------------
-ARG SPARK_VERSION=2.4.3
+ARG SPARK_VERSION=2.3.3
 ARG HADOOP_VERSION=2.7
 ENV SPARK_HOME=/usr/spark
 ENV SPARK_DIST_CLASSPATH="$HADOOP_HOME/etc/hadoop/*:$HADOOP_HOME/share/hadoop/common/lib/*:$HADOOP_HOME/share/hadoop/common/*:$HADOOP_HOME/share/hadoop/hdfs/*:$HADOOP_HOME/share/hadoop/hdfs/lib/*:$HADOOP_HOME/share/hadoop/hdfs/*:$HADOOP_HOME/share/hadoop/yarn/lib/*:$HADOOP_HOME/share/hadoop/yarn/*:$HADOOP_HOME/share/hadoop/mapreduce/lib/*:$HADOOP_HOME/share/hadoop/mapreduce/*:$HADOOP_HOME/share/hadoop/tools/lib/*"
