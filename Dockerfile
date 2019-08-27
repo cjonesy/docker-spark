@@ -21,6 +21,8 @@ RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm && \
         libxslt-devel \
         zip && \
     yum clean all && \
+    /usr/bin/pip2 install --upgrade setuptools pip && \
+    /usr/bin/pip3.6 install --upgrade setuptools pip && \
     rm /etc/localtime && \
     ln -s /usr/share/zoneinfo/America/Chicago /etc/localtime
 
