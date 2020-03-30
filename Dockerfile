@@ -5,21 +5,21 @@ FROM centos:7
 #-------------------------------------------------------------------------------
 RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm && \
     yum install -y \
-        python36u \
-        python36u-pip \
-        python36u-devel \
-        python2-pip \
-        python-devel \
-        gcc \
-        wget \
-        libiffi-devel \
-        openssl-devel \
-        postgresql-devel \
-        libxml2 \
-        libxml2-devel \
-        libxslt \
-        libxslt-devel \
-        zip && \
+    python36u \
+    python36u-pip \
+    python36u-devel \
+    python2-pip \
+    python-devel \
+    gcc \
+    wget \
+    libiffi-devel \
+    openssl-devel \
+    postgresql-devel \
+    libxml2 \
+    libxml2-devel \
+    libxslt \
+    libxslt-devel \
+    zip && \
     yum clean all && \
     /usr/bin/pip2 install --upgrade setuptools pip && \
     /usr/bin/pip3.6 install --upgrade setuptools pip && \
@@ -59,3 +59,7 @@ COPY ./entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["sh"]
+
+EXPOSE 8080
+EXPOSE 8081
+EXPOSE 7077
