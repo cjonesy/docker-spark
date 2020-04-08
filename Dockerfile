@@ -5,8 +5,8 @@ MAINTAINER cjonesy
 # Install dependencies
 #-------------------------------------------------------------------------------
 RUN yum install -y \
-        python-setuptools python-devel gcc wget libiffi-devel openssl-devel \
-        postgresql-devel libxml2 libxml2-devel libxslt libxslt-devel which zip && \
+    python-setuptools python-devel gcc wget libiffi-devel openssl-devel \
+    postgresql-devel libxml2 libxml2-devel libxslt libxslt-devel which zip && \
     yum clean all && \
     easy_install pip && \
     pip install --upgrade setuptools pip && \
@@ -21,11 +21,11 @@ ENV JAVA_URL="http://download.oracle.com/otn-pub/java/jdk/8u152-b16/aa0333dd3019
 ENV JAVA_HOME=/usr/java/default
 
 RUN wget --no-cookies --no-check-certificate \
-         --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
-         "$JAVA_URL" \
-         -O /tmp/jdk-linux-x64.rpm && \
-         yum localinstall -y /tmp/jdk-linux-x64.rpm && \
-         rm /tmp/jdk-linux-x64.rpm
+    --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
+    "$JAVA_URL" \
+    -O /tmp/jdk-linux-x64.rpm && \
+    yum localinstall -y /tmp/jdk-linux-x64.rpm && \
+    rm /tmp/jdk-linux-x64.rpm
 
 
 #-------------------------------------------------------------------------------
@@ -69,3 +69,7 @@ COPY ./entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["sh"]
+
+EXPOSE 8080
+EXPOSE 8081
+EXPOSE 7077
